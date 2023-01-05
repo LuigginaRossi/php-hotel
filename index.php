@@ -44,6 +44,47 @@ $hotels = [
 var_dump($hotels);
 
 // Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
+
+//$parking= $_GET["parking"]==="true";
+$parking = $_GET["parking"] ?? "";
+// $vote= isset($_GET["vote"]) ? $_GET["vote"] : "";
+$rating = isset($_GET["vote"]) ? $_GET["vote"] : "";
+
+$hasFilters = !empty($parking) || !empty($vote);
+$filteredData = [];
+
+if ($hasFilters) {
+    //se ho filtri procedo
+
+    //ciclo su $hotels
+    foreach ($hotels as $hotel) {
+        //uso la checkbox=> se ceccato true altrimenti nulla
+        // quindi se parking è true e il dto dell'$hotels è true
+        // if(($parking  && $hotel["parking"]=== true) || ($hotel["vote"])>= ){
+        //     $filteredData[] = $hotel;
+        // }
+        $push = true;
+
+        if ($parking && $hotel["parking"] === false) {
+            $push = false;
+        }
+        //
+        //se voto richiesto è minore del voto dell'hotel
+        //non è zero e il voto dell'hotel non è minore di quello richiesto dall'utente.
+        if (!empty($rating) && $hotel["vote"] < $rating) {
+            $push = false;
+        }
+        if ($push) {
+            $filteredData[] = $hotel;
+        }
+    }
+} else {
+    //non ho filtri
+    $filteredData = $hotels;
+}
+
+var_dump($parking);
+
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +110,18 @@ var_dump($hotels);
 <body>
     <div class="text-center container py-5">
         <h1 class="pb-4">PHP HOTEL</h1>
+
+        <form action="" method="get">
+            <div class="mb-3 form-check w-25">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="parking">
+                <label class="form-check-label" for="exampleCheck1">Check parking area</label>
+            </div>
+
+            <div class="mb-3 form-check w-25">
+            </div>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </form>
 
         <table class="table">
             <thead>
@@ -119,3 +172,5 @@ var_dump($hotels);
 </body>
 
 </html>
+<!-- 
+io raga ho disinstallato intellephense e ho scaricato PHP extension pack e funziona tutto, sia l'HTML che il PHP -->
