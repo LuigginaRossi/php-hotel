@@ -54,18 +54,18 @@ $hasFilters = !empty($parking) || !empty($vote);
 $filteredData = [];
 
 if ($hasFilters) {
-    //se ho filtri procedo
+    //se ho filtri procedo:
 
     //ciclo su $hotels
     foreach ($hotels as $hotel) {
-        //uso la checkbox=> se ceccato true altrimenti nulla
-        // quindi se parking è true e il dto dell'$hotels è true
+        //uso la checkbox=> se ceccato true/on altrimenti nulla
+        // quindi se parking è true e il dato dell'$hotels è true
         // if(($parking  && $hotel["parking"]=== true) || ($hotel["vote"])>= ){
         //     $filteredData[] = $hotel;
         // }
         $push = true;
 
-        if ($parking && $hotel["parking"] === false) {
+        if ($parking && $hotel["parking"] !== true) {
             $push = false;
         }
         //
@@ -119,8 +119,8 @@ var_dump($parking);
 
             <div class="mb-3 form-check w-25">
             </div>
-            <button type="reset" class="btn btn-secondary">Reset</button>
-            <button type="submit" class="btn btn-secondary">Search</button>
+            <a class="btn btn-warning me-3 w-25" href="index.php">Reset</a>
+            <button type="submit" class="btn btn-secondary w-25">Search</button>
         </form>
 
         <table class="table">
@@ -137,7 +137,7 @@ var_dump($parking);
             <tbody>
 
                 <?php
-                foreach ($hotels as $singleHotel) {
+                foreach ($filteredData as $singleHotel) {
                 ?>
                     <tr>
                         <th scope="row" class="text-start"><?php echo $singleHotel["name"] ?></th>
